@@ -22,9 +22,18 @@ const docentes: Docente[] = [
   }
 ];
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Docente[]>
-) {
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  // CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // Preflight (CORS) request
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
+  // Normal response
   res.status(200).json(docentes);
 }
